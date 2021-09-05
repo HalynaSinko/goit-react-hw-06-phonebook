@@ -26,27 +26,6 @@ const itemsReducer = createReducer(initialContacts, {
 const filterReducer = createReducer("", {
   [changeFilter]: (_, { payload }) => payload,
 });
-// const itemsReducer = (state = initialContacts, { type, payload }) => {
-//   switch (type) {
-//     case actionsTypes.ADD:
-//       return [payload, ...state];
-
-//     case actionsTypes.REMOVE:
-//       return state.filter(({ id }) => id !== payload);
-
-//     default:
-//       return state;
-//   }
-// };
-
-// const filterReducer = (state = "", { type, payload }) => {
-//   switch (type) {
-//     case actionsTypes.CHANGE_FILTER:
-//       return payload;
-//     default:
-//       return state;
-//   }
-// };
 
 export default combineReducers({
   items: itemsReducer,
