@@ -1,14 +1,17 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+// import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 
-import * as actions from "../../redux/contacts/contacts-actions";
+import { addContact } from "../../redux/contacts/contacts-actions";
 import s from "./ContactForm.module.css";
+import { getContacts } from "../../redux/contacts/contacts-selectors";
 
-function ContactForm({ onSubmit, contacts }) {
+export default function ContactForm() {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
+
+  const contacts = useSelector(getContacts);
 
   const handleChangeForm = (event) => {
     const { name, value } = event.target;
@@ -29,6 +32,10 @@ function ContactForm({ onSubmit, contacts }) {
     setName("");
     setNumber("");
   };
+
+  const dispatch = useDispatch();
+  const onSubmit = ({ id, name, number }) =>
+    dispatch(addContact({ id, name, number }));
 
   const handleSubmitForm = (event) => {
     event.preventDefault();
@@ -82,20 +89,20 @@ function ContactForm({ onSubmit, contacts }) {
     </form>
   );
 }
-const mapStateToProps = (state) => {
-  return {
-    contacts: state.contacts.items,
-  };
-};
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onSubmit: ({ id, name, number }) =>
-      dispatch(actions.addContact({ id, name, number })),
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     contacts: state.contacts.items,
+//   };
+// };
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     onSubmit: ({ id, name, number }) =>
+//       dispatch(addContact({ id, name, number })),
+//   };
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
+//  connect(mapStateToProps, mapDispatchToProps)(ContactForm);
 
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
+// ContactForm.propTypes = {
+//   onSubmit: PropTypes.func.isRequired,
+// };
